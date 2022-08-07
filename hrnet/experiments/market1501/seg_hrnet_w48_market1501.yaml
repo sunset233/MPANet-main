@@ -1,0 +1,81 @@
+CUDNN:
+  BENCHMARK: true
+  DETERMINISTIC: false
+  ENABLED: true
+#GPUS: (0, 1, 2, 3)
+GPUS: (0, )
+OUTPUT_DIR: 'output'
+LOG_DIR: 'log'
+WORKERS: 2
+PRINT_FREQ: 20
+
+DATASET:
+  DATASET: market1501
+  ROOT: '/home/lxz/lph/MPANet-main/hrnet/data/'
+  NUM_CLASSES: 10
+MODEL:
+  NAME: seg_hrnet
+  EXTRA:
+    FINAL_CONV_KERNEL: 1
+    STAGE1:
+      NUM_MODULES: 1
+      NUM_RANCHES: 1
+      BLOCK: BOTTLENECK
+      NUM_BLOCKS:
+        - 4
+      NUM_CHANNELS:
+        - 64
+      FUSE_METHOD: SUM
+    STAGE2:
+      NUM_MODULES: 1
+      NUM_BRANCHES: 2
+      BLOCK: BASIC
+      NUM_BLOCKS:
+      - 4
+      - 4
+      NUM_CHANNELS:
+      - 48
+      - 96
+      FUSE_METHOD: SUM
+      DOWNSAMPLE: 2
+    STAGE3:
+      NUM_MODULES: 4
+      NUM_BRANCHES: 3
+      BLOCK: BASIC
+      NUM_BLOCKS:
+      - 4
+      - 4
+      - 4
+      NUM_CHANNELS:
+      - 48
+      - 96
+      - 192
+      FUSE_METHOD: SUM
+      DOWNSAMPLE: 2
+    STAGE4:
+      NUM_MODULES: 3
+      NUM_BRANCHES: 4
+      BLOCK: BASIC
+      NUM_BLOCKS:
+      - 4
+      - 4
+      - 4
+      - 4
+      NUM_CHANNELS:
+      - 48
+      - 96
+      - 192
+      - 384
+      FUSE_METHOD: SUM
+      DOWNSAMPLE: 1
+TEST:
+  IMAGE_SIZE:
+  - 128
+  - 384
+  BASE_SIZE: 384
+  BATCH_SIZE_PER_GPU: 8
+  NUM_SAMPLES: 2000
+  FLIP_TEST: false
+  MULTI_SCALE: false
+  IGNORE_LABEL: 255
+  MODEL_FILE: 'pretrained_models/best.pth'
