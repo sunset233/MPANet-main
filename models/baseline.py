@@ -176,6 +176,30 @@ class Baseline(nn.Module):
         feats = []
 
         if self.pattern_attention:
+        #     masks = global_feat
+        #     masks = self.spatial_attention(masks)
+        #     masks = self.activation(masks)
+        #
+        #     feats = []
+        #     for i in range(self.part_num):
+        #         mask = masks[:, i:i + 1, :, :]
+        #         feat = mask * global_feat
+        #
+        #         feat = F.avg_pool2d(feat, feat.size()[2:])
+        #         feat = feat.view(feat.size(0), -1)
+        #
+        #         feats.append(feat)
+        #
+        #     global_feat = F.avg_pool2d(global_feat, global_feat.size()[2:])
+        #     global_feat = global_feat.view(global_feat.size(0), -1)
+        #
+        #     feats.append(global_feat)
+        #     feats = torch.cat(feats, 1)
+        #
+        #     if self.training:
+        #         masks = masks.view(b, self.part_num, w * h)
+        #         loss_reg = torch.bmm(masks, masks.permute(0, 2, 1))
+        #         loss_reg = torch.triu(loss_reg, diagonal=1).sum() / (b * self.part_num * (self.part_num - 1) / 2)
             mask = inputs * mask.unsqueeze(1).repeat(1,3,1,1)
             feat = self.part_net(mask)
             feat = F.avg_pool2d(feat, feat.size()[2:])
@@ -195,6 +219,20 @@ class Baseline(nn.Module):
             feat3 = F.avg_pool2d(feat3, feat3.size()[2:])
             feat3 = feat3.view(feat3.size(0), -1)
             feats.append(feat3)
+
+            # masks = global_feat
+            # masks = self.spatial_attention(masks)
+            # masks = self.activation(masks)
+
+            # feats = []
+            # for i in range(self.part_num):
+            #     mask = masks[:, i:i+1, :, :]
+            #     feat = mask * global_feat
+            #
+            #     feat = F.avg_pool2d(feat, feat.size()[2:])
+            #     feat = feat.view(feat.size(0), -1)
+
+                # feats.append(feat)
 
             global_feat = F.avg_pool2d(global_feat, global_feat.size()[2:])
             global_feat = global_feat.view(global_feat.size(0), -1)
