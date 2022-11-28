@@ -84,6 +84,7 @@ def train(cfg):
         return {'Total': total_num, 'Trainable': trainable_num}
 
     print(get_parameter_number(model))
+    model_attr.cuda()
 
     model.cuda()
 

@@ -6,7 +6,7 @@ rerank: false
 # dataset
 sample_method: identity_random
 image_size: (384, 128)
-p_size: 10
+p_size: 12
 k_size: 6
 
 dataset: sysu
@@ -29,7 +29,7 @@ weight_KL: 2.5
 
 # architecture
 drop_last_stride: true
-pattern_attention: true
+pattern_attention: false
 mutual_learning: true
 modality_attention: 2
 

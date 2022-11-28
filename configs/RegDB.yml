@@ -1,12 +1,12 @@
 prefix: RegDB
 
 fp16: true
-rerank: false
+rerank: true
 
 # dataset
 sample_method: identity_random
 image_size: (384, 128)
-p_size: 10
+p_size: 12
 k_size: 6
 
 dataset: regdb
@@ -49,4 +49,4 @@ padding: 10
 # log
 log_period: 20
 start_eval: 115
-eval_interval: 20
+eval_interval: 5
